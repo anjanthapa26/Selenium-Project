@@ -6,35 +6,12 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium import webdriver
 import time
 
-def login_details(email,password,driver):
-
-    try:
-        getEmail = WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.XPATH, "//input[@id='o1-input']"))
-        )
-        getPassword = WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.XPATH, "//input[@id='current-password']"))
-        )
-
-        getLogin = WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.XPATH, "//button[@class='zp-button zp_1TrB3 zp_3m2tW zp_2z1mP']"))
-        )
-        getEmail.send_keys(email)
-        getPassword.send_keys(password)
-        getLogin.click()
-
-
-    except TimeoutException as ex:
-        print(ex.message)
-
-
 
 def get_the_right_company(companyName,driver):
 
     chooseCompany = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.XPATH,"//input[@placeholder='Search...']"))
     )
-    chooseCompany.send_keys(companyName)
 
     try:
         getRightCompany = WebDriverWait(driver,20).until(EC.presence_of_element_located((By.XPATH,"//*[contains(text(),'"+companyName+"')]/..//div[contains(text(),'Information technology & services')]/../../../..")))
@@ -54,18 +31,22 @@ def check_if_revenue_matches_criteria(driver):
             return True
 
     except Exception as e:
-        print("Unable to fetch the revenue info")
+        return True
 
 
 
-def login_to_new_window(driver,companyName):
-    driver.execute_script("window.open('https://app.apollo.io/#/login','new window')")
-    driver.switch_to.window(driver.window_handles[1])
-    login_details("thapaanjan40@gmail.com","@asdfqwer1234@",driver)
-    get_the_right_company(companyName,driver)
-    if (check_if_revenue_matches_criteria(driver) == False):
-        driver.switch_to.window(driver.window_handles[0])
-        return driver
+def find_if_eligible_company(driver,list_of_companiesDetails):
+
+    for com_details in list_of_companiesDetails:
+
+        # should fix this issue of not getting the company name 
+
+        if com_details[0] != 'No company name available':
+
+            get_the_right_company(com_details[0],driver)
+            
+            if (check_if_revenue_matches_criteria(driver) == False):
+                return driver
 
 
 

@@ -1,0 +1,71 @@
+Job details
+Job Type
+Full-time
+Remote
+Benefits
+Pulled from the full job description
+401(k)
+401(k) matching
+Dental insurance
+Disability insurance
+Health insurance
+Health savings account
+Show 2 more benefits
+Indeed's salary guide
+Not provided by employer
+$88.9K - $113K a year is Indeed's estimated salary for this role in Lehi, UT.
+ Full Job Description
+Vasion, formerly PrinterLogic, is looking for a talented DevOps Engineer with Azure experience to join our growing team based in St. George, UT (available as fully-remote in the U.S.). The primary responsibility will be building, maintaining, troubleshooting, and automating cloud infrastructure and CI/CD pipelines in a microservice environment.
+
+Key Responsibilities:
+Build, operate, maintain, and automate global cloud infrastructure (Azure, AWS) for a microservice environment
+Identify and solve infrastructure-related problems with infrastructure as code (IaC)
+Support CI/CD pipelines (build, maintain, troubleshoot)
+Improve operations by automating tasks and/or creating tools
+Participate in 24/7 on-call rotation
+
+Skills & Experience Required:
+Strong understanding and hands-on experience with (Azure, AWS) in a production environment
+Hands-on experience with Linux systems administration
+Broad knowledge of infrastructure services including networking, DNS, load balancing, databases / MySQL, security, etc.
+2+ years of experience in a cloud DevOps role
+
+Skills & Experience Preferred:
+Application Performance Monitoring and troubleshooting
+Hands-on experience with container orchestration technologies such as Docker Swarm, Kubernetes
+Hands-on experience with Jenkins, Datadog, Terraform, CloudFormation
+Strong in one more or programming/scripting languages (Bash, Python, Go)
+Excellent critical thinking, communication, presentation, and coding abilities
+Bachelor's degree in, computer science, information systems, or equivalent work experience
+
+Relevant Certifications:
+Azure Administrator Associate (AZ-104)
+Azure Solutions Architect Expert (AZ-305)
+AWS Certified SysOps Administrator
+AWS Certified Solutions Architect
+
+Benefits & Compensation:
+Medical/Dental/Vision plans with company contributions (HDHP, PPO)
+Generous flexible time off program
+Company HSA contribution
+401k matching
+Life Insurance/Long Term Disability
+Market-based compensation based on experience, skill level, and personal abilities
+Rapidly growing tech company with family-oriented work atmosphere
+Scaling organization allowing for numerous career paths and opportunities
+Casual dress/atmosphere
+
+Our Core Values:
+Action Owners (Extreme Ownership by Jocko Willink and Leif Babin)
+Truth Seekers (Radical Candor by Kim Scott)
+Relationship Builders (Leadership and Self-deception by The Arbinger Institute)
+Storytellers (Building a StoryBrand: Clarify Your Message So Customers Will Listen by Donald Miller)
+
+About Vasion:
+Vasion, formerly PrinterLogic, builds upon the company’s enterprise print management technology and the ECM/document management expertise the company gained through its acquisition of MaxxVault to enable organizations to digitize content and automate business processes to drive compliance, scalability, and accountability. With Vasion’s SaaS platform, businesses can capture analog and digital content, automate workflows, and securely manage content wherever it is stored. The company has been included multiple times on the Inc. 5000 and Deloitte Fast 500 lists of fastest growing companies in North America. For more information visit https://www.vasion.com.
+
+Additional Information:
+Vasion is an equal opportunity employer. We evaluate qualified applicants without regard to race, age, color, religion, sex, national origin, disability, veteran status, gender identity, sexual orientation and other legally protected characteristics.
+Hiring Insights
+Job activity
+Posted 8 days ago
