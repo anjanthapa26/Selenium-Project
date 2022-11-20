@@ -30,7 +30,13 @@ def login_details(email,password,driver):
 
 
 def login_to_new_window(driver):
+
+    driver.get('https://app.apollo.io/#/login')
+
+    ''' applying the demo for the apolloscraper'''
+    '''
     driver.execute_script("window.open('https://app.apollo.io/#/login','new window')")
     driver.switch_to.window(driver.window_handles[1])
+    '''
     login_details("thapaanjan40@gmail.com","@asdfqwer1234@",driver)
     return driver
