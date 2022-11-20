@@ -8,11 +8,17 @@ import time
 from openpyxl import Workbook
 from openpyxl.styles import Font
 from openpyxl.utils import get_column_letter
+from getIndustriesTags import get_the_list_of_tags
 from excelsheet import get_the_header_section,extract_info_to_excel_sheet
 
 
 list_of_headers = ['Company','Designation','Responsible Person','Emails','Tech stack','Experience','Salary','Source Link']
 dest_filename = 'testsheet.xlsx'
+
+
+''' commenting it for the update of the dynamic feature in input tag '''
+
+'''
 def get_the_right_company(companyName,driver):
 
     chooseCompany = WebDriverWait(driver, 40).until(
@@ -29,9 +35,12 @@ def get_the_right_company(companyName,driver):
         print('Could not get the rightcompany information',e)
 
 
+'''
+
 
 '''Get the emails of the respective rows '''
 
+'''
 def get_the_emails(driver,elem):
     email_tab = elem.find_elements(By.TAG_NAME,'button')
     email_tab[0].click()
@@ -44,15 +53,27 @@ def get_the_emails(driver,elem):
 
     except:
         print("There is a problem in finding the email container")
+'''
 
 
+def get_the_emails(driver,elem):
+    elem.click()
 
+    try:
+        if_element_is_hidden = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH,"//div[normalize-space()='Access Email & Phone']/..")))
+        return if_element_is_hidden.text
+    except:
+        try:
+            if_elem_not_hidden = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH,"//div[@class='zp-contact-email-envelope-container zp_n4sev zp_1sjoN']/div[1]/a")))
+            return if_elem_not_hidden.text
+        except:
+            print('Email element container not found')
 ''' Methods to get a different tbodies '''
 
 def get_different_tbodies(driver,get_rows):
 
     try:
-        table_rows_datas = get_rows.find_elements(By.XPATH,'//tr/td')
+        table_rows_datas = get_rows.find_elements(By.CLASS_NAME,'zp_1sEIg')
     except:
         print('no table_rows_datas')
     try:
@@ -69,7 +90,7 @@ def get_different_tbodies(driver,get_rows):
         print('No designation')
 
     try:
-        email = get_the_emails(driver,table_rows_datas[2])
+        email = get_the_emails(driver,table_rows_datas[0])
     except:
         print('No email')
 
@@ -82,7 +103,7 @@ def get_the_precise_details_of_company(driver):
     companies_precise_details = []
     try:
         get_tables =  WebDriverWait(driver, 10).until(
-            EC.presence_of_all_elements_located((By.XPATH,"//tbody")))
+            EC.presence_of_all_elements_located((By.CLASS_NAME,"zp_lXHd4")))
 
         for get_rows in get_tables:
             if counter <= 3:
@@ -120,13 +141,17 @@ def get_details_of_company(driver):
     get_people.click()
 
     ''' open the filter tab '''
-    try:
-        get_filter = WebDriverWait(driver, 3).until(
-            EC.presence_of_element_located((By.XPATH,"//*[contains(text(),'Open Filters')]/.."))
-        )
-        get_filter.click()
-    except:
-        print('Could not get the Open filters')
+    while True:
+        try:
+            get_filter = WebDriverWait(driver, 3).until(
+                EC.presence_of_element_located((By.XPATH,"//*[contains(text(),'Open Filters')]/.."))
+            )
+    
+            get_filter.click()
+            break
+        except:
+            driver.refresh()
+            continue
 
 
     ''' click on the job title and enter the criterias for the jobs post on the search bar '''
@@ -174,7 +199,9 @@ def check_if_revenue_matches_criteria(driver):
         return True
 
 
+''' Commenting this because implementing new features on input field to handle it dynamically '''
 
+'''
 def find_if_eligible_company(driver,list_of_companiesDetails):
 
     wb,ws = get_the_header_section(list_of_headers)
@@ -184,16 +211,85 @@ def find_if_eligible_company(driver,list_of_companiesDetails):
 
         if com_details[0] != 'No company name available':
 
+
             get_the_right_company(com_details[0],driver)
             if check_if_revenue_matches_criteria(driver) == True:
                 three_details_of_company = get_details_of_company(driver)
-                print(three_details_of_company)
                 if len(three_details_of_company) > 0:
                     ws = extract_info_to_excel_sheet(ws,three_details_of_company,com_details)
 
         break
 
     wb.save(filename = dest_filename)
+
+'''
+
+
+def find_if_eligible_company(driver,list_of_companiesDetails):
+
+    wb,ws = get_the_header_section(list_of_headers)
+
+    for com_details in list_of_companiesDetails:
+
+        # should fix this issue of not getting the company name 
+
+        if com_details[0] != 'No company name available':
+
+            total_lists_companies_of_respective_company = get_the_list_of_tags(com_details[0],driver)
+
+            print(total_lists_companies_of_respective_company)
+            counter = 0
+            if_found = False
+            while counter < len(total_lists_companies_of_respective_company):
+
+                print('inside while loop', counter,total_lists_companies_of_respective_company[counter][0],com_details[0])
+                if total_lists_companies_of_respective_company[counter][0] == com_details[0]:
+
+                    print(total_lists_companies_of_respective_company[counter])
+                    try:
+                        getRightCompany = WebDriverWait(driver,20).until(EC.presence_of_element_located((By.XPATH,"//*[contains(text(),'"+com_details[0]+"')]/..//div[contains(text(),'"+total_lists_companies_of_respective_company[counter][1]+"')]/../../../..")))
+                        getRightCompany.click()
+
+                        ''' Getting the perviously used code '''
+
+                        if check_if_revenue_matches_criteria(driver) == True:
+                            three_details_of_company = get_details_of_company(driver)
+                            
+                            if len(three_details_of_company) > 0:
+                                ws = extract_info_to_excel_sheet(ws,three_details_of_company,com_details)
+
+                        if counter != len(total_lists_companies_of_respective_company)-1:
+
+                            if_found = True
+                            get_to_chooseCompany = WebDriverWait(driver, 40).until(EC.presence_of_element_located((By.XPATH,"//input[@placeholder='Search...']")))
+                            
+                            get_to_chooseCompany.send_keys(companyName)
+                        
+
+                    except:
+                        print('Got an error condition inside main try section')
+
+
+                else:
+                    counter +=1
+                    continue
+
+                counter +=1
+                
+
+            if if_found == True:
+                driver.refresh()
+
+
+        break
+
+    wb.save(filename = dest_filename)
+
+    
+
+            
+
+
 
 
 

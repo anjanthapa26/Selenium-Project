@@ -17,8 +17,11 @@ def get_the_header_section(headers):
 def extract_info_to_excel_sheet(ws,three_details_of_company,list_of_companiesDetails):
     for rows in three_details_of_company:
         ws.append([list_of_companiesDetails[0],rows[0],rows[1],rows[2],0,list_of_companiesDetails[1],list_of_companiesDetails[2],list_of_companiesDetails[3]])
+    
+    return ws
 
-
+def save_file(wb):
+    wb.save(testsheet.xlsx)
 
 
 
