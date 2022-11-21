@@ -143,7 +143,7 @@ def get_details_of_company(driver):
     ''' open the filter tab '''
     while True:
         try:
-            get_filter = WebDriverWait(driver, 3).until(
+            get_filter = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.XPATH,"//*[contains(text(),'Open Filters')]/.."))
             )
     

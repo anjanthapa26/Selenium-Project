@@ -9,7 +9,7 @@ import re
 def check_if_authorization(driver):
 
     try:
-        element = WebDriverWait(driver, 10).until(
+        element = WebDriverWait(driver, 30).until(
             EC.presence_of_element_located((By.CLASS_NAME,"jobsearch-JobComponent-description"))
         )
 

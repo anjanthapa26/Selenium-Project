@@ -1,29 +1,53 @@
 Job details
-Salary
-$80,000 - $85,000 a year
 Job Type
-Full-time
+Part-time
 Remote
 Full Job Description
-Project Location(s): Remote. Will need to be onsite at client location after COVID-19.
-Education: Bachelor’s or higher in Computer Science or Engineering is required
-Compensation: $80K - 85K per annum
-Employment Type: Full-Time
-Interview: 1 Phone Screen interview
-Number of Positions: 5
-Top Candidate Skills/Years of Experience
-1. Experience in AWS infrastructure to Serverless architecture (AWS Lambda, AWS Kinesis) through the creation of a Serverless Architecture using AWS Lambda, API gateway, Route 53, S3 buckets.
-2. Hands-on in using OpenShift for container orchestration with Kubernetes, container storage, automation, to enhance container platform multi-tenancy.
-3. Expert in Setting up Continuous Integration (CI) by configuring Build, Code, Deploy and test automation Jobs in Jenkins for different applications.
-4. Proficient in using Docker Hub, Docker Engine, Docker images, Docker Weave, Docker Compose, Docker Swarm, and Docker Registry
-5. Experience with Shell and Python Scripting.
-6. Experience in dealing with Unix/Linux and Windows server administration.
-PRE-SCREENING QUESTIONS!
-Have you been involved in large scale distributed project that has online presence?
-Please summarize your personal work in the above project.
-How many people were involved with that project?
-How would you describe your role in the team?
-Screening Questions must be filled and emailed to us along with resume, Legal Full name and Photo ID to resume@vitesse-group.com.
+Position Summary:
+We are looking for a DevOps Engineer who understands and embraces a DevSecOps philosophy and has successful experience supporting a DevSecOps Team. You will work closely with development, operations, and security to design and implement solutions, as well as support/ensure access to automation tools for our government client. Specifically, you will be responsible for managing CI/CD pipelines and cloud application environments that support rapid and reliable configuration management, as well as continuous integration, build, release, and monitoring solutions. Lastly, you will be responsible for ensuring that all supporting systems are operational and maintain various levels of certification.
+
+Responsibilities:
+Effectively prioritize work and complete tasks on time.
+Able to work and collaborate with a remote team.
+Assist with software and infrastructure management, inventory, installations, configurations, and connectivity.
+Provide support for administering web and application servers.
+Evaluate and implement technologies that improve efficiency, performance, and reliability.
+Analyze requirements and recommend best fit architecture.
+Build solutions that are generic, scalable, and reusable.
+Collaborate with other engineers to develop deployment and maintenance strategies for existing and new services.
+Analyze and troubleshoot problems within DevSecOps tools.
+Assist with various compliance activities, including vulnerability management and mitigation.
+Maintain documentation related to processes, procedures, solutions, and architecture.
+Required Qualifications:
+Continuous integration and delivery (CI/CD).
+Linux system administration experience.
+Strong scripting/development skills.
+Python and UNIX shell scripting are preferred.
+Experience with test automation tools.
+Experience with logging configuration and analysis.
+Experience with Configuration Management tools such as Ansible, Chef, Puppet, and/or SaltStack
+Preferred Qualifications:
+Experience managing RHEL (Red Hat Enterprise Linux)
+Familiarity with Artifactory.
+Splunk experience is a plus.
+Experience managing and configuring JBOSS, OpenShift, or Tomcat web containers
+Experience with JBoss Fuse, Appian, and Oracle DB
+Experience with GitLab, JIRA, and other Atlassian tools
+Experience with IDEs, such as IntelliJ, Eclipse, or similar
+Experience with Security/Compliance
+Knowledge of DevSecOps processes, procedures, and tools (such as git, CI/CD, Configuration Management)
+Expertise in cloud computing platforms such as AWS, Azure and Google Cloud
+Expertise in Kubernetes
+Expertise in building Docker images
+Strong experience in deploying and managing microservices
+Pipelines such as AWS CodePipeline and Jenkins
+
+LCAT Job Requirements:
+Ability to attain Federal Government Position of Trust.
+Must be a U.S. citizen.
+Must successfully pass a Federal background investigation.
+
+Synergy is an equal opportunity employer. All qualified applicants will receive consideration for employment without regard to race, color, religion, sex (including pregnancy, sexual orientation, or gender identity), national origin, age, disability, genetic information (including family medical history) or protected veteran status.
 Hiring Insights
 Job activity
-Posted 11 days ago
+Posted 30+ days ago

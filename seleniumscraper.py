@@ -26,6 +26,10 @@ def launchBrowser():
     driver.get('http://www.indeed.com')
     return driver
 
+
+
+
+
 driver = launchBrowser()
 whatJobs = driver.find_element(By.XPATH,"//input[@id='text-input-what']").send_keys('Devops Engineers')
 whereJobs = driver.find_element(By.XPATH,"//input[@id='text-input-where']").send_keys('Remote')
@@ -39,11 +43,12 @@ searchBtn.click()
 
 def deal_with_sourceLinks(company,job):
     try:
-        sourceLink = job.find_element(By.LINK_TEXT,f"{company}")
+        sourceLink = job.find_element(By.XPATH,".//a[@class='jcs-JobTitle css-jspxzf eu4oa1w0']")
+        #sourceLink = job.find_element(By.XPATH,".//h2[@class='jobTitle css-1h4a4n5 eu4oa1w0']/a")
         getLink = sourceLink.get_attribute('href')
         return getLink
     except:
-        return 'Does not have a source link on '+ company
+        return 'None'
 
 
 ''' Since the payment sources are also inconsistent, handle that scenerios'''
@@ -58,7 +63,7 @@ def deal_with_estimated_salary(job):
             HourlySalary = job.find_element(By.CLASS_NAME, value="attribute_snippet")
             return HourlySalary.text
         except:
-            print('There is an issue inside salary section')
+            print('None')
 
 
 
@@ -67,10 +72,13 @@ def deal_with_estimated_salary(job):
 
 def deal_with_companyName(job):
     try:
-        companyName = job.find_element(by=By.CLASS_NAME, value="companyName")
+        #companyName = WebDriverWait(driver, 10).until(
+        #EC.presence_of_element_located((By.XPATH,"(//div[@class='jobsearch-InlineCompanyRating-companyHeader'])/a")))
+        #companyName = job.find_element(By.CLASS_NAME,"companyName")
+        companyName = job.find_element(By.XPATH,"(.//span[@class='companyName'])")
         return companyName.text
     except:
-        return 'No company name available'
+        return 'None'
 
 ''' Find if the each companies on lists complies with the rules or not '''
 
@@ -80,51 +88,78 @@ def find_if_complies_rules(job):
     except Exception as e:
         print('Error on the execute_script')
 
+    '''
     actions = ActionChains(driver)
     actions.move_to_element(job)
     actions.click(job)
     actions.perform()
-
-
-    getCompanyName = deal_with_companyName(job)
+    time.sleep(2)
+    '''
+    job.click()
+    time.sleep()
+    gt = job.find_element(By.CLASS_NAME,'resultContent')
+    getCompanyName = deal_with_companyName(gt)
     print(getCompanyName)
 
-    getSourceLink = deal_with_sourceLinks(getCompanyName,job)
+    getSourceLink = deal_with_sourceLinks(getCompanyName,gt)
     print(getSourceLink)
 
-    getSalary = deal_with_estimated_salary(job)
+    getSalary = deal_with_estimated_salary(gt)
     print(getSalary)
 
-    findExperience,check_valid = check_if_authorization(driver)
-    print(findExperience,check_valid)
-    if check_valid == False:
-        list_of_valid_companies_Details.append([getCompanyName,findExperience,getSalary,getSourceLink])
-    
+    if (getCompanyName != 'None') and (getSourceLink != 'None'):
+        findExperience,check_valid = check_if_authorization(driver)
+        print(findExperience,check_valid)
+        if check_valid == False:
+            list_of_valid_companies_Details.append([getCompanyName,findExperience,getSalary,getSourceLink])
 
-    print(list_of_valid_companies_Details)
+
+        print(list_of_valid_companies_Details)
+        print('length of list_of_valid_companies_details',len(list_of_valid_companies_Details))
         #login_to_new_window(driver,getCompanyName.text)
 
     
 
 
 def find_list_of_jobs():
-    count = 0
-    go_to_next_page = driver.find_element(By.XPATH,"//a[@aria-label='Next Page']")
+    #count = 0
+    #go_to_next_page = driver.find_element(By.XPATH,"//a[@aria-label='Next Page']")
     while True:
         try:
-            count +=1
+            go_to_next_page = driver.find_element(By.XPATH,"//a[@aria-label='Next Page']")
+
+            #count +=1
+            '''
             job_lists = WebDriverWait(driver, 10).until(
-            EC.presence_of_all_elements_located((By.XPATH, "//ul[@class='jobsearch-ResultsList css-0']/li")))
+            EC.presence_of_all_elements_located((By.XPATH, "//ul[@class='jobsearch-ResultsList css-0']/li")))'''
+            # test1 = "//div[@class='slider_container css-g7s71f eu4oa1w0']"
+            job_lists = WebDriverWait(driver,20).until(
+                EC.presence_of_all_elements_located((By.XPATH,"(//div[@class='job_seen_beacon'])"))
+            )
+
+
             for job in job_lists:
                 find_if_complies_rules(job)
+
+            go_to_next_page.click()
+
+            '''
             if count == 1:
                 break
             go_to_next_page.click()
+
+
+            '''
         except:
             break
 
 
 find_list_of_jobs()
 
-driver = login_to_new_window(driver)
-find_if_eligible_company(driver,list_of_valid_companies_Details)
+
+
+
+''' just to check for the front side of indeed '''
+
+#driver = login_to_new_window(driver)
+#find_if_eligible_company(driver,list_of_valid_companies_Details)
