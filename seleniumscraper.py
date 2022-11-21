@@ -88,15 +88,17 @@ def find_if_complies_rules(job):
     except Exception as e:
         print('Error on the execute_script')
 
-    '''
-    actions = ActionChains(driver)
-    actions.move_to_element(job)
-    actions.click(job)
-    actions.perform()
-    time.sleep(2)
-    '''
-    job.click()
-    time.sleep()
+    try:
+        find_tr = job.find_elements(By.CLASS_NAME,'jobCardShelf')
+        time.sleep(1)
+        actions = ActionChains(driver)
+        actions.move_to_element(find_tr)
+        actions.click(find_tr)
+        actions.perform()
+        time.sleep(2)
+    except:
+        print('Click event not found')
+
     gt = job.find_element(By.CLASS_NAME,'resultContent')
     getCompanyName = deal_with_companyName(gt)
     print(getCompanyName)
@@ -125,31 +127,35 @@ def find_list_of_jobs():
     #count = 0
     #go_to_next_page = driver.find_element(By.XPATH,"//a[@aria-label='Next Page']")
     while True:
+        #count =0
         try:
             go_to_next_page = driver.find_element(By.XPATH,"//a[@aria-label='Next Page']")
 
-            #count +=1
             '''
             job_lists = WebDriverWait(driver, 10).until(
             EC.presence_of_all_elements_located((By.XPATH, "//ul[@class='jobsearch-ResultsList css-0']/li")))'''
             # test1 = "//div[@class='slider_container css-g7s71f eu4oa1w0']"
             job_lists = WebDriverWait(driver,20).until(
-                EC.presence_of_all_elements_located((By.XPATH,"(//div[@class='job_seen_beacon'])"))
+                EC.presence_of_all_elements_located((By.CLASS_NAME,'job_seen_beacon'))
             )
 
 
+
             for job in job_lists:
+                
                 find_if_complies_rules(job)
 
+
+            
             go_to_next_page.click()
 
             '''
             if count == 1:
                 break
-            go_to_next_page.click()
+                '''
 
 
-            '''
+            
         except:
             break
 
@@ -160,6 +166,8 @@ find_list_of_jobs()
 
 
 ''' just to check for the front side of indeed '''
+'''
+driver = login_to_new_window(driver)
+find_if_eligible_company(driver,list_of_valid_companies_Details)
 
-#driver = login_to_new_window(driver)
-#find_if_eligible_company(driver,list_of_valid_companies_Details)
+'''
