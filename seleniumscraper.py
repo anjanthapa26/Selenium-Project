@@ -105,19 +105,15 @@ def find_if_complies_rules(job: WebElement):
         print('Error on the execute_script')
 
     try:
-        # find_tr = job.find_elements(By.CLASS_NAME, 'jobCardShelf')
-        # time.sleep(1)
-        if job.get_attribute("class") == "estimated-salary-legal-disclaimer-button":
-            return
+        find_tr = job.find_element(By.CLASS_NAME, 'jobCardShelf')
         actions = ActionChains(driver)
-        actions.move_to_element(job)
-        actions.click(job)
+        actions.move_to_element(find_tr)
+        actions.click(find_tr)
         actions.perform()
         time.sleep(2)
     except:
         print('Click event not found')
 
-    # gt = job.find_element(By.CLASS_NAME, 'resultContent')
     get_company_name = deal_with_company_name(job)
     print(get_company_name)
 
