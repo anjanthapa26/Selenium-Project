@@ -1,0 +1,8 @@
+# Python cache files
+*.pyc
+
+# IDE files
+.idea
+
+# Virutal Environment
+venv    
