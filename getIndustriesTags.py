@@ -65,16 +65,17 @@ def get_the_list_of_tags(companyName,driver):
 
     get_parent_of_sibling_companies = get_parent_container.find_elements(By.XPATH,"//div[contains(text(),'companies')]/../../following-sibling::div/div/div[2]/div")
 
-
     for sibling_parents in get_parent_of_sibling_companies:
         get_comp = sibling_parents.text
         print(get_comp.splitlines())
         get_sibling_company = sibling_parents.text.splitlines()[0]
-        get_sibling_industry_tag = sibling_parents.text.splitlines()[2]
+        try:
+            get_sibling_industry_tag = sibling_parents.text.splitlines()[2]
+        except IndexError:
+            continue
         if get_sibling_industry_tag not in filter_industries:
             lists_of_companies_with_tags.append([get_sibling_company,get_sibling_industry_tag])
             
             print(get_sibling_company,get_sibling_industry_tag)
-
 
     return lists_of_companies_with_tags

@@ -239,11 +239,9 @@ def find_if_eligible_company(driver,list_of_companiesDetails):
 
             print(total_lists_companies_of_respective_company)
             counter = 0
-            if_found = False
             while counter < len(total_lists_companies_of_respective_company):
-
                 print('inside while loop', counter,total_lists_companies_of_respective_company[counter][0],com_details[0])
-                if total_lists_companies_of_respective_company[counter][0] == com_details[0]:
+                if total_lists_companies_of_respective_company[counter][0].lower() == com_details[0].lower():
 
                     print(total_lists_companies_of_respective_company[counter])
                     try:
@@ -258,30 +256,20 @@ def find_if_eligible_company(driver,list_of_companiesDetails):
                             if len(three_details_of_company) > 0:
                                 ws = extract_info_to_excel_sheet(ws,three_details_of_company,com_details)
 
-                        if counter != len(total_lists_companies_of_respective_company)-1:
-
-                            if_found = True
-                            get_to_chooseCompany = WebDriverWait(driver, 40).until(EC.presence_of_element_located((By.XPATH,"//input[@placeholder='Search...']")))
-                            
-                            get_to_chooseCompany.send_keys(companyName)
-                        
+                        get_to_chooseCompany = WebDriverWait(driver, 40).until(EC.presence_of_element_located((By.XPATH,"//input[@placeholder='Search...']")))
+                        get_to_chooseCompany.clear()
+                        get_to_chooseCompany.send_keys(com_details[0])
 
                     except:
                         print('Got an error condition inside main try section')
-
+                    finally:
+                        counter += 1
 
                 else:
-                    counter +=1
+                    counter += 1
                     continue
-
-                counter +=1
-                
-
-            if if_found == True:
+            else:
                 driver.refresh()
-
-
-        break
 
     wb.save(filename = dest_filename)
 
