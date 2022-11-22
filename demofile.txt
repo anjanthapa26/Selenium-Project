@@ -1,0 +1,58 @@
+Job details
+Encouraged to Apply
+Fair chance
+Job Type
+Full-time
+Remote
+Benefits
+Pulled from the full job description
+Opportunities for advancement
+Indeed's salary guide
+Not provided by employer
+$89.5K - $113K a year is Indeed's estimated salary for this role in Remote.
+ Full Job Description
+Work Styles at Zoom
+In most cases, you will have the opportunity to choose your preferred working location from the following options when you join Zoom: in-person, hybrid or remote. Visit this page for more information about
+Zoom's Workstyles
+.
+About Us
+Zoomies help people stay connected so they can get more done together. We set out to build the best video product for the enterprise, and today help people communicate better with products like Zoom Contact Center, Zoom Phone, Zoom Events, Zoom Apps, Zoom Rooms, and Zoom Webinars.
+We’re problem-solvers, working at a fast pace to design solutions with our customers and users in mind. Here, you’ll work across teams to deliver impactful projects that are changing the way people communicate and enjoy opportunities to advance your career in a diverse, inclusive environment.
+You will be part of a DevOps team responsible for deploying and operating core services for Zoom Apps applications and products.
+Zoom Apps bring best of breed applications into the Zoom experience for seamless productivity and engaging experience
+Responsibilities:
+Design, deploy, monitor and scale Zoom Platform services
+Improve the whole lifecycle of Zoom Platform services from planning to go live strategy
+Work closely with cross-functional stakeholders to analyze and troubleshoot complex production issues
+Build a resilient and scalable service infrastructure to accommodate region based data centers
+Optimize current CI/CD process and streamline automation effort for server provisioning and deployment
+Support test automation and deployment strategy to optimize service performance and ensure product quality
+Qualifications:
+BS/MS (CS or related major preferred)
+Minimum 2 years of DevOps or SRE experience
+Deep knowledge of AWS infrastructure (i.e. DynamoDB, S3, Nginx, CloudWatch), Linux batch commands, ELK stack and container orchestration (i.e. K8s, Docker)
+Working experience with Terraform on cluster provision
+Kubernetes cluster monitoring, alerting and logging experience
+Hands on experience in Jenkins, Ansible and Git repositories
+Ability to monitor, debug and automate routine tasks
+Familiar with cloud infrastructure technologies and cloud based test automation solution
+You must be currently authorized to work in the United States on a full-time basis
+Willing to learn, be proactive, and think creatively
+#LI-Remote
+We believe that the unique contributions of all Zoomies is the driver of our success. To make sure that our products and culture continue to incorporate everyone's perspectives and experience we never discriminate on the basis of race, religion, national origin, gender identity or expression, sexual orientation, age, or marital, veteran, or disability status. Zoom is proud to be an equal opportunity workplace and is an affirmative action employer. All your information will be kept confidential according to EEO guidelines.
+We welcome people of different backgrounds, experiences, abilities and perspectives including qualified applicants with arrest and conviction records and any qualified applicants requiring reasonable accommodations in accordance with the law. If you need any assistance or accommodations due to a medical condition, or if you need assistance accessing our website or completing the application process, please let us know by emailing us at
+careers@zoom.us
+.
+At Zoom, we care about our employees, their families, and their well-being. As part of our award-winning workplace culture and commitment to delivering happiness, our benefits program offers a variety of perks, benefits, and options to help employees maintain their physical, mental, emotional, and financial health; support work-life balance; and contribute to their community in meaningful ways.
+Explore Zoom:
+Hear from our leadership team
+Browse Awards and Employee Reviews on Comparably
+Visit our Blog
+Zoom with us!
+Find us on social at the links below and on
+Instagram
+
+#LI-Remote
+Hiring Insights
+Job activity
+Posted 30+ days ago

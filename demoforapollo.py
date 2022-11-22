@@ -13,9 +13,17 @@ from apolloLogins import login_to_new_window
 from apolloScraper import find_if_eligible_company
 
 
-
+list_of_valid_companies_Details = [['Sesamy', 'N/A', 'Estimated $62.1K - $78.6K a year', 'Does not have a source link on OpsWorks Co.','Devops']]
+'''
 list_of_valid_companies_Details =[['Sesamy', 'N/A', 'Estimated $62.1K - $78.6K a year', 'Does not have a source link on OpsWorks Co.'], ['Booz Allen Hamilton', 'N/A', 'Estimated $72.7K - $92K a year', 'https://www.indeed.com/cmp/Booz-Allen-Hamilton'], ['Shtudy', 'N/A', '$60,000 - $400,000 a year', 'Does not have a source link on Shtudy'], ['Capgemini', 'N/A', 'Estimated $95.5K - $121K a year', 'https://www.indeed.com/cmp/Capgemini'], ['Piper Companies', 'N/A', 
-'$125,000 - $150,000 a year', 'https://www.indeed.com/cmp/Piper-Companies'], ['No company name available', 'N/A', None, 'Does not have a source link on No company name available'], ['Federal Reserve Bank of Kansas City', 'N/A', 'Estimated $95.8K - $121K a year', 'https://www.indeed.com/cmp/Federal-Reserve-Bank-of-Kansas-City'], ['Premier Inc.', 'N/A', '$64,000 - $118,000 a year', 'https://www.indeed.com/cmp/Premier-Inc.-4'], ['Zoom Video Communications, Inc.', 'N/A', 'Estimated $95.9K - $121K a year', 'https://www.indeed.com/cmp/Zoom-Video-Communications-4'], ['Koch Ag & Energy Solutions', '2 years', '$100,000 - $140,000 a year', 'Does not have a source link on Koch Ag & Energy Solutions'], ['Tista Science and Technology Corporation', 'N/A', 'Estimated $95.5K - $121K a year', 'https://www.indeed.com/cmp/Tista-Science-and-Technology-Corporation'], ['No company name available', 'N/A', None, 'Does not have a source link on No company name available'], ['Remote Jobs', '3 years', 'Estimated $83.2K - $105K a year', 'https://www.indeed.com/cmp/Remote-Jobs'], ['eXp Realty', 'N/A', 'Full-time', 'https://www.indeed.com/cmp/Exp-Realty'], ['Concentrix Catalyst', 'N/A', 'Estimated $58K - $73.4K a year', 'https://www.indeed.com/cmp/Concentrix-Catalyst-1'],['CloudRay Inc', 'N/A', 'Estimated $118K - $150K a year', 'Does not have a source link on CloudRay Inc']]
+'$125,000 - $150,000 a year', 'https://www.indeed.com/cmp/Piper-Companies'],
+ ['No company name available', 'N/A', None, 'Does not have a source link on No company name available'], 
+ ['Federal Reserve Bank of Kansas City', 'N/A', 'Estimated $95.8K - $121K a year', 'https://www.indeed.com/cmp/Federal-Reserve-Bank-of-Kansas-City'],
+  ['Premier Inc.', 'N/A', '$64,000 - $118,000 a year', 'https://www.indeed.com/cmp/Premier-Inc.-4'], 
+  ['Zoom Video Communications, Inc.', 'N/A', 'Estimated $95.9K - $121K a year', 'https://www.indeed.com/cmp/Zoom-Video-Communications-4'],
+   ['Koch Ag & Energy Solutions', '2 years', '$100,000 - $140,000 a year', 'Does not have a source link on Koch Ag & Energy Solutions'],
+    ['Tista Science and Technology Corporation', 'N/A', 'Estimated $95.5K - $121K a year', 'https://www.indeed.com/cmp/Tista-Science-and-Technology-Corporation'], ['No company name available', 'N/A', None, 'Does not have a source link on No company name available'], ['Remote Jobs', '3 years', 'Estimated $83.2K - $105K a year', 'https://www.indeed.com/cmp/Remote-Jobs'], ['eXp Realty', 'N/A', 'Full-time', 'https://www.indeed.com/cmp/Exp-Realty'], ['Concentrix Catalyst', 'N/A', 'Estimated $58K - $73.4K a year', 'https://www.indeed.com/cmp/Concentrix-Catalyst-1'],['CloudRay Inc', 'N/A', 'Estimated $118K - $150K a year', 'Does not have a source link on CloudRay Inc']]
+    '''
 def launchBrowser():
     path = './chromedriver.exe'
     chrome_options = Options()

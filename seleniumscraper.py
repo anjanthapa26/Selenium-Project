@@ -1,3 +1,4 @@
+import re
 import time
 from typing import AnyStr
 from fp.fp import FreeProxy
@@ -17,6 +18,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 proxy = FreeProxy(rand=True).get()
 list_of_valid_companies_Details = []
+cases = [["\$\d+K - \$\d+K"],["\$\d+,\d+ - \$\d+,\d+"],["\$\d+.\d+K - \$\d+.\d+K"],["\$\d+.\d+K - \$\d+K"],["\$\d+K - \$\d+.\d+K"],["\$\d+,\d+K - \$\d+,\d+K"]]
 TARGET_URL = 'https://www.indeed.com'
 
 
@@ -45,6 +47,7 @@ def launch_browser():
 
 
 driver = launch_browser()
+driver.maximize_window()
 driver.get(TARGET_URL)
 driver.find_element(By.XPATH, "//input[@id='text-input-what']").send_keys('Devops Engineers')
 driver.find_element(By.XPATH, "//input[@id='text-input-where']").send_keys('Remote')
@@ -70,14 +73,23 @@ def deal_with_estimated_salary(job: WebElement) -> AnyStr or None:
     try:
         salary_parent = job.find_element(By.CLASS_NAME, value="estimated-salary")
         salary = salary_parent.find_element(By.TAG_NAME, 'span').text
-        return salary
+        for case in cases:
+            get_exact_salary = re.findall(case[0], salary)
+            if get_exact_salary:
+                return get_exact_salary[0]
+        if not get_exact_salary:
+            return salary
     except:
         try:
             hourly_salary = job.find_element(By.CLASS_NAME, value="attribute_snippet")
-            return hourly_salary.text
+            for case in cases:
+                get_exact_hourly = re.findall(case[0], hourly_salary.text)
+                if get_exact_hourly:
+                    return get_exact_hourly[0]
+            if not get_exact_hourly:
+                return hourly_salary.text
         except:
-            print('None')
-            return None
+            return 'None'
 
 
 ''' Deal with the inconsistent company Name '''
@@ -124,10 +136,10 @@ def find_if_complies_rules(job: WebElement):
     print(get_salary)
 
     if (get_company_name != 'None') and (get_source_link != 'None'):
-        find_experience, check_valid = check_if_authorization(driver)
-        print(find_experience, check_valid)
+        find_experience,get_tech, check_valid = check_if_authorization(driver)
+        #print(find_experience, check_valid)
         if not check_valid:
-            list_of_valid_companies_Details.append([get_company_name, find_experience, get_salary, get_source_link])
+            list_of_valid_companies_Details.append([get_company_name, find_experience, get_salary, get_source_link,get_tech])
 
         print(list_of_valid_companies_Details)
         print('length of list_of_valid_companies_details', len(list_of_valid_companies_Details))
@@ -135,10 +147,9 @@ def find_if_complies_rules(job: WebElement):
 
 
 def find_list_of_jobs():
-    # count = 0
+    count = 0
     # go_to_next_page = driver.find_element(By.XPATH,"//a[@aria-label='Next Page']")
     while True:
-        # count =0
         try:
             go_to_next_page = driver.find_element(By.XPATH, "//a[@aria-label='Next Page']")
 
@@ -151,14 +162,15 @@ def find_list_of_jobs():
             )
 
             for job in job_lists:
+                count +=1
                 find_if_complies_rules(job)
 
-            go_to_next_page.click()
+                if count == 4:
+                    break
+            break
 
-            '''
-            if count == 1:
-                break
-                '''
+            go_to_next_page.click()
+                
         except:
             break
 
@@ -166,8 +178,8 @@ def find_list_of_jobs():
 find_list_of_jobs()
 
 ''' just to check for the front side of indeed '''
-'''
+
 driver = login_to_new_window(driver)
 find_if_eligible_company(driver,list_of_valid_companies_Details)
 
-'''
+driver.quit()

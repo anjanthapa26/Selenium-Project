@@ -42,7 +42,7 @@ def get_the_list_of_tags(companyName,driver):
     chooseCompany = WebDriverWait(driver, 40).until(
             EC.presence_of_element_located((By.XPATH,"//input[@placeholder='Search...']"))
     )
-    chooseCompany.send_keys(companyName)
+    chooseCompany.send_keys(companyName.split(',')[0])
     time.sleep(5)
 
     try:
@@ -51,19 +51,26 @@ def get_the_list_of_tags(companyName,driver):
     except:
         print('unable to get parent container')
     
-    get_first_company_parent = get_parent_container.find_element(By.XPATH,"//div[contains(text(),'companies')]/../following-sibling::div/div[2]/div")
+    try:
+        get_first_company_parent = get_parent_container.find_element(By.XPATH,"//div[contains(text(),'companies')]/../following-sibling::div/div[2]/div")
+    except:
+        return lists_of_companies_with_tags
     print(get_first_company_parent.text)
     get_company = get_first_company_parent.text.splitlines()[0]
-    get_industry_tag = get_first_company_parent.text.splitlines()[2]
-
-    if get_industry_tag not in filter_industries:
-        lists_of_companies_with_tags.append([get_company,get_industry_tag])
-        
+    try:
+        get_industry_tag = get_first_company_parent.text.splitlines()[2]
+        if get_industry_tag not in filter_industries:
+            lists_of_companies_with_tags.append([get_company,get_industry_tag])
+    except IndexError:
+        pass
         #print(get_company,get_industry_tag)
 
     ''' Getting the group of lists of elements to tally '''
 
-    get_parent_of_sibling_companies = get_parent_container.find_elements(By.XPATH,"//div[contains(text(),'companies')]/../../following-sibling::div/div/div[2]/div")
+    try:
+        get_parent_of_sibling_companies = get_parent_container.find_elements(By.XPATH,"//div[contains(text(),'companies')]/../../following-sibling::div/div/div[2]/div")
+    except:
+        return lists_of_companies_with_tags
 
     for sibling_parents in get_parent_of_sibling_companies:
         get_comp = sibling_parents.text

@@ -20,22 +20,32 @@ def check_if_authorization(driver):
         def readFile(fileName):
             getInfo = []
             getExperience = []
+            get_tech_stack = []
+            tech_stacks = ['AWS', 'Azure', 'Ansible', 'Python', 'Docker', 'Kubernetes', 'Terraform',  'Jenkins',  'Puppet']
             fileObj = open(fileName,'r')
             words = fileObj.read().splitlines()
 
-            for i in words:
-                if re.findall('\d+ years',i):
-                    getExperience.append(re.findall('\d+ years',i)[0])
-                    getInfo.append(getExperience[0])
-                    break
-                elif re.findall('\d+ year',i):
-                    getExperience.append(re.findall('\d+ year',i)[0])
-                    getInfo.append(getExperience[0])
-                    break
+            for word in words:
+                if re.findall('\d+ years',word):
+                    getExperience.append(re.findall('\d+ years',word)[0])
+                if re.findall('\d+ year',word):
+                    getExperience.append(re.findall('\d+ year',word)[0])
+                if re.findall('\d\+ years',word):
+                    getExperience.append(re.findall('\d\+ years',word)[0])
 
-            if len(getExperience) < 1:
+                for each_char in tech_stacks:
+                    if each_char in word and each_char not in get_tech_stack:
+                        get_tech_stack.append(each_char)
+
+
+            if len(getExperience) > 0:
+                final_list_of_years = max(list(map(int,re.findall('\d+',' '.join(getExperience)))))
+                getInfo.append(final_list_of_years)
+            else:
                 getInfo.append('N/A')
 
+            getInfo.append(' '.join(get_tech_stack))
+            
             for word in words:
                 if word.find('U.S') != -1 or word.find('U.S work permit') != -1 or word.find('USA') != -1 or word.find('U.S permit') != -1:
                     getInfo.append(True)

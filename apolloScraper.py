@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium import webdriver
 import time
-from openpyxl import Workbook
+from openpyxl import load_workbook
 from openpyxl.styles import Font
 from openpyxl.utils import get_column_letter
 from getIndustriesTags import get_the_list_of_tags
@@ -13,7 +13,7 @@ from excelsheet import get_the_header_section,extract_info_to_excel_sheet
 
 
 list_of_headers = ['Company','Designation','Responsible Person','Emails','Tech stack','Experience','Salary','Source Link']
-dest_filename = 'testsheet.xlsx'
+DEVOPS = './sheets/devops.xlsx'
 
 
 ''' commenting it for the update of the dynamic feature in input tag '''
@@ -60,14 +60,16 @@ def get_the_emails(driver,elem):
     elem.click()
 
     try:
-        if_element_is_hidden = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH,"//div[normalize-space()='Access Email & Phone']/..")))
-        return if_element_is_hidden.text
+        if_element_is_hidden = WebDriverWait(driver,5).until(EC.presence_of_element_located((By.XPATH,"//div[normalize-space()='Access Email & Phone']/..")))
+        if_element_is_hidden.click()
+        if_elem_not_hidden = WebDriverWait(driver,5).until(EC.presence_of_element_located((By.XPATH,"//div[@class='zp-contact-email-envelope-container zp_n4sev zp_1sjoN']/div[1]/a")))
+        return if_elem_not_hidden.text
     except:
         try:
-            if_elem_not_hidden = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH,"//div[@class='zp-contact-email-envelope-container zp_n4sev zp_1sjoN']/div[1]/a")))
+            if_elem_not_hidden = WebDriverWait(driver,5).until(EC.presence_of_element_located((By.XPATH,"//div[@class='zp-contact-email-envelope-container zp_n4sev zp_1sjoN']/div[1]/a")))
             return if_elem_not_hidden.text
         except:
-            print('Email element container not found')
+            return 'No Email'
 ''' Methods to get a different tbodies '''
 
 def get_different_tbodies(driver,get_rows):
@@ -129,7 +131,7 @@ def get_people_somehow(driver):
             return g_people
         except:
             continue
-        time.sleep(2)
+        time.sleep(1)
 
 
 
@@ -227,7 +229,8 @@ def find_if_eligible_company(driver,list_of_companiesDetails):
 
 def find_if_eligible_company(driver,list_of_companiesDetails):
 
-    wb,ws = get_the_header_section(list_of_headers)
+    wb = load_workbook(filename = DEVOPS)
+    ws = wb.active
 
     for com_details in list_of_companiesDetails:
 
@@ -238,6 +241,9 @@ def find_if_eligible_company(driver,list_of_companiesDetails):
             total_lists_companies_of_respective_company = get_the_list_of_tags(com_details[0],driver)
 
             print(total_lists_companies_of_respective_company)
+            if not total_lists_companies_of_respective_company:
+                driver.refresh()
+                continue
             counter = 0
             while counter < len(total_lists_companies_of_respective_company):
                 print('inside while loop', counter,total_lists_companies_of_respective_company[counter][0],com_details[0])
@@ -245,23 +251,27 @@ def find_if_eligible_company(driver,list_of_companiesDetails):
 
                     print(total_lists_companies_of_respective_company[counter])
                     try:
-                        getRightCompany = WebDriverWait(driver,20).until(EC.presence_of_element_located((By.XPATH,"//*[contains(text(),'"+com_details[0]+"')]/..//div[contains(text(),'"+total_lists_companies_of_respective_company[counter][1]+"')]/../../../..")))
+                        getRightCompany = WebDriverWait(driver,30).until(EC.presence_of_element_located((By.XPATH,"//*[contains(text(),'"+com_details[0]+"')]/..//div[contains(text(),'"+total_lists_companies_of_respective_company[counter][1]+"')]/../../../..")))
                         getRightCompany.click()
 
                         ''' Getting the perviously used code '''
 
+
                         if check_if_revenue_matches_criteria(driver) == True:
                             three_details_of_company = get_details_of_company(driver)
-                            
+
+
                             if len(three_details_of_company) > 0:
                                 ws = extract_info_to_excel_sheet(ws,three_details_of_company,com_details)
+                                    
 
                         get_to_chooseCompany = WebDriverWait(driver, 40).until(EC.presence_of_element_located((By.XPATH,"//input[@placeholder='Search...']")))
                         get_to_chooseCompany.clear()
-                        get_to_chooseCompany.send_keys(com_details[0])
+                        get_to_chooseCompany.send_keys(com_details[0].split(',')[0])
 
-                    except:
-                        print('Got an error condition inside main try section')
+
+                    except Exception as e:
+                        print('The company does not contains details according to the given tags')
                     finally:
                         counter += 1
 
@@ -271,7 +281,11 @@ def find_if_eligible_company(driver,list_of_companiesDetails):
             else:
                 driver.refresh()
 
-    wb.save(filename = dest_filename)
+    print('last section of the file')
+
+    wb.save(filename = DEVOPS)
+
+    return driver
 
     
 
