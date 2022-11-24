@@ -36,7 +36,7 @@ def get_the_right_company(companyName,driver):
 def get_the_list_of_tags(companyName,driver):
 
     
-    filter_industries = ['airlines/aviation','aviation & aerospace','banking','defense & space','government administration','government relations','higher education','law enforcement','law practice','legal services','legislative office','military','oil & energy']
+    filter_industries = ['airlines/aviation','aviation & aerospace','Banking','defense & space','government administration','government relations','higher education','law enforcement','law practice','legal services','legislative office','military','oil & energy']
 
     lists_of_companies_with_tags = []
     chooseCompany = WebDriverWait(driver, 40).until(

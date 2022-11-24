@@ -6,10 +6,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium import webdriver
 import time
 from openpyxl import load_workbook
-from openpyxl.styles import Font
 from openpyxl.utils import get_column_letter
 from getIndustriesTags import get_the_list_of_tags
-from excelsheet import get_the_header_section,extract_info_to_excel_sheet
 
 
 list_of_headers = ['Company','Designation','Responsible Person','Emails','Tech stack','Experience','Salary','Source Link']
@@ -56,17 +54,30 @@ def get_the_emails(driver,elem):
 '''
 
 
+def extract_info_to_excel_sheet(ws,three_details_of_company,list_of_companiesDetails):
+    duplicate_company_checker_list = list(map(lambda cell:cell.value,ws[get_column_letter(1)]))[1:]
+    print('Got inside extract info to excel sheet section',duplicate_company_checker_list)
+    if list_of_companiesDetails[0] in duplicate_company_checker_list:
+        return ws
+    else:
+        for rows in three_details_of_company:
+            print(three_details_of_company,list_of_companiesDetails)
+            ws.append([list_of_companiesDetails[0],rows[0],rows[1],rows[2],list_of_companiesDetails[4],list_of_companiesDetails[1],list_of_companiesDetails[2],list_of_companiesDetails[3]])
+
+        return ws
+
+
 def get_the_emails(driver,elem):
     elem.click()
 
     try:
-        if_element_is_hidden = WebDriverWait(driver,5).until(EC.presence_of_element_located((By.XPATH,"//div[normalize-space()='Access Email & Phone']/..")))
+        if_element_is_hidden = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//div[normalize-space()='Access Email & Phone']/..")))
         if_element_is_hidden.click()
-        if_elem_not_hidden = WebDriverWait(driver,5).until(EC.presence_of_element_located((By.XPATH,"//div[@class='zp-contact-email-envelope-container zp_n4sev zp_1sjoN']/div[1]/a")))
+        if_elem_not_hidden = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//div[@class='zp-contact-email-envelope-container zp_n4sev zp_1sjoN']/div[1]/a")))
         return if_elem_not_hidden.text
     except:
         try:
-            if_elem_not_hidden = WebDriverWait(driver,5).until(EC.presence_of_element_located((By.XPATH,"//div[@class='zp-contact-email-envelope-container zp_n4sev zp_1sjoN']/div[1]/a")))
+            if_elem_not_hidden = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//div[@class='zp-contact-email-envelope-container zp_n4sev zp_1sjoN']/div[1]/a")))
             return if_elem_not_hidden.text
         except:
             return 'No Email'
@@ -123,15 +134,14 @@ def get_the_precise_details_of_company(driver):
 
 def get_people_somehow(driver):
     plist = ['People','Employees']
-
-    for people in plist:
-        print(people)
+    count = 0
+    while count < 2:
         try:
-            g_people = driver.find_element(By.XPATH,"//a[normalize-space()='"+people+"']")
+            g_people = driver.find_element(By.XPATH,"//a[normalize-space()='"+plist[count]+"']")
             return g_people
         except:
+            count +=1
             continue
-        time.sleep(1)
 
 
 
@@ -178,7 +188,7 @@ def get_details_of_company(driver):
         time.sleep(2)
         apply_filter = driver.find_element(By.XPATH,"//*[contains(text(),'Apply Filters')]/..")
         apply_filter.click()
-        time.sleep(4)
+        time.sleep(2)
         return get_the_precise_details_of_company(driver)
 
     except:
@@ -190,7 +200,7 @@ def get_details_of_company(driver):
     
 def check_if_revenue_matches_criteria(driver):
     try:
-        checkRevenue = WebDriverWait(driver,20).until(EC.presence_of_element_located((By.XPATH,"//*[contains(text(),'Annual Revenue')]/../div[2]"))).text
+        checkRevenue = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH,"//*[contains(text(),'Annual Revenue')]/../div[2]"))).text
         print(checkRevenue)
         if checkRevenue[-1] == 'B' or (checkRevenue[-1] == 'M' and int(checkRevenue[1:len(checkRevenue)-1]) > 50):
             return False
@@ -229,65 +239,66 @@ def find_if_eligible_company(driver,list_of_companiesDetails):
 
 def find_if_eligible_company(driver,list_of_companiesDetails):
 
-    wb = load_workbook(filename = DEVOPS)
+    wb = load_workbook(filename=DEVOPS)
     ws = wb.active
-
+    print(list(ws.values))
     for com_details in list_of_companiesDetails:
 
         # should fix this issue of not getting the company name 
 
-        if com_details[0] != 'No company name available':
+        total_lists_companies_of_respective_company = get_the_list_of_tags(com_details[0],driver)
 
-            total_lists_companies_of_respective_company = get_the_list_of_tags(com_details[0],driver)
+        print(total_lists_companies_of_respective_company)
+        if not total_lists_companies_of_respective_company:
+            driver.refresh()
+            continue
+        counter = 0
+        while counter < len(total_lists_companies_of_respective_company):
+            print('inside while loop', counter,total_lists_companies_of_respective_company[counter][0],com_details[0])
+            if total_lists_companies_of_respective_company[counter][0].lower() == com_details[0].lower():
 
-            print(total_lists_companies_of_respective_company)
-            if not total_lists_companies_of_respective_company:
-                driver.refresh()
-                continue
-            counter = 0
-            while counter < len(total_lists_companies_of_respective_company):
-                print('inside while loop', counter,total_lists_companies_of_respective_company[counter][0],com_details[0])
-                if total_lists_companies_of_respective_company[counter][0].lower() == com_details[0].lower():
+                print(total_lists_companies_of_respective_company[counter])
+                try:
+                    getRightCompany = WebDriverWait(driver,7).until(EC.presence_of_element_located((By.XPATH,"//*[contains(text(),'"+com_details[0]+"')]/..//div[contains(text(),'"+total_lists_companies_of_respective_company[counter][1]+"')]/../../../..")))
+                    #exact_xpath ="//*[@class='zp_1RaZe zp_1omjm'][contains(normalize-space(),'"+com_details[0]+"')][contains(normalize-space(),'"+total_lists_companies_of_respective_company[counter][1]+"')]"
+                    #getRightCompany = WebDriverWait(driver,30).until(EC.element_to_be_clickable(("//*[@class='zp_2brNs'][contains(normalize-space(),'"+com_details[0]+"')][contains(normalize-space(),'"+total_lists_companies_of_respective_company[counter][1]+"')]/div[1]")))
+                    #getRightCompany = WebDriverWait(driver,30).until(EC.presence_of_element_located((By.XPATH,"//*[contains(text(),'"+com_details[0]+"')]/..//div[contains(text(),'"+total_lists_companies_of_respective_company[counter][1]+"')]/../../..")))
+                    getRightCompany.click()
+                except:
+                    print('Unable to fetch the tag data')
 
-                    print(total_lists_companies_of_respective_company[counter])
-                    try:
-                        getRightCompany = WebDriverWait(driver,30).until(EC.presence_of_element_located((By.XPATH,"//*[contains(text(),'"+com_details[0]+"')]/..//div[contains(text(),'"+total_lists_companies_of_respective_company[counter][1]+"')]/../../../..")))
-                        getRightCompany.click()
+                    ''' Getting the perviously used code '''
 
-                        ''' Getting the perviously used code '''
-
-
-                        if check_if_revenue_matches_criteria(driver) == True:
-                            three_details_of_company = get_details_of_company(driver)
+                try:
+                    if check_if_revenue_matches_criteria(driver) == True:
+                        three_details_of_company = get_details_of_company(driver)
 
 
-                            if len(three_details_of_company) > 0:
-                                ws = extract_info_to_excel_sheet(ws,three_details_of_company,com_details)
-                                    
+                        if len(three_details_of_company) > 0:
+                            ws = extract_info_to_excel_sheet(ws,three_details_of_company,com_details)
 
-                        get_to_chooseCompany = WebDriverWait(driver, 40).until(EC.presence_of_element_located((By.XPATH,"//input[@placeholder='Search...']")))
+
+                    if counter != len(total_lists_companies_of_respective_company)-1:
+                        get_to_chooseCompany = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,"//input[@placeholder='Search...']")))
                         get_to_chooseCompany.clear()
                         get_to_chooseCompany.send_keys(com_details[0].split(',')[0])
 
 
-                    except Exception as e:
-                        print('The company does not contains details according to the given tags')
-                    finally:
-                        counter += 1
-
-                else:
+                except Exception as e:
+                    print('The company does not contains details according to the given tags')
+                finally:
                     counter += 1
-                    continue
-            else:
-                driver.refresh()
 
-    print('last section of the file')
+            else:
+                counter += 1
+                continue
+        else:
+            driver.refresh()
 
     wb.save(filename = DEVOPS)
 
-    return driver
+    wb.close()
 
-    
 
             
 
