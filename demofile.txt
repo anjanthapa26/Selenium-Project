@@ -1,0 +1,25 @@
+Job details
+Job Type
+Contract
+Remote
+Indeed's salary guide
+Not provided by employer
+$102K - $129K a year is Indeed's estimated salary for this role in Remote.
+ Full Job Description
+Duration: 7+ Months
+
+Job Description:
+Highest priority: AWS Lambda with node.js. If this skill is absent, the candidate may not be very productive.
+Secondary priority: Serverless Deployment, if already know Jenkins, AWS Code Pipelines, etc. So, this skill is trainable.
+Lesser priorities: AWS API Gateways, AWS RDS with Postgres (Arora), AWS Dynamo.
+These skills are nice to have.
+Misc: One trust (desired), JIRA, Confluence.
+
+The Capgemini Freelancer Gateway is enabled by a cutting-edge software platform that leads the contingent labor world for technology innovation. The software platform leverages Machine Learning and Artificial Intelligence to make sure the right people end up in the right job.
+
+A global leader in consulting, technology services, and digital transformation, Capgemini is at the forefront of innovation to address the entire breadth of clients’ opportunities in the evolving world of cloud, digital, and platforms. Building on its strong 50-year heritage and deep industry-specific expertise, Capgemini enables organizations to realize their business ambitions through an array of services from strategy to operations. Capgemini is driven by the conviction that the business value of technology comes from and through people. It is a multicultural company with over 200,000 team members in more than 40 countries. The Group reported 2018 global revenues of EUR 13.2 billion.
+Hiring Insights
+Job activity
+Posted 15 days ago
+Capgemini
+Report job

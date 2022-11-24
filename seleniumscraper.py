@@ -16,6 +16,9 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 
+
+WHAT = "Devops Engineer"
+WHERE = "Remote"
 proxy = FreeProxy(rand=True).get()
 list_of_valid_companies_Details = []
 cases = [["\$\d+K - \$\d+K"],["\$\d+,\d+ - \$\d+,\d+"],["\$\d+.\d+K - \$\d+.\d+K"],["\$\d+.\d+K - \$\d+K"],["\$\d+K - \$\d+.\d+K"],["\$\d+,\d+K - \$\d+,\d+K"]]
@@ -49,8 +52,8 @@ def launch_browser():
 driver = launch_browser()
 driver.maximize_window()
 driver.get(TARGET_URL)
-driver.find_element(By.XPATH, "//input[@id='text-input-what']").send_keys('Devops Engineers')
-driver.find_element(By.XPATH, "//input[@id='text-input-where']").send_keys('Remote')
+driver.find_element(By.XPATH, "//input[@id='text-input-what']").send_keys(WHAT)
+driver.find_element(By.XPATH, "//input[@id='text-input-where']").send_keys(WHERE)
 searchBtn = driver.find_element(by=By.CLASS_NAME, value="yosegi-InlineWhatWhere-primaryButton")
 searchBtn.click()
 
@@ -151,30 +154,38 @@ def find_if_complies_rules(job: WebElement):
             except:
                 print('Unable to located element on the job description sectoin')
 
+
 def find_list_of_jobs():
-
+    global proxy
+    count = 1
+    next_itr_pages = count + 2
     while True:
+        proxy = FreeProxy(rand=True).get()
         try:
-                
-            go_to_next_page = driver.find_element(By.XPATH, "//a[@aria-label='Next Page']")
-
-            job_lists = WebDriverWait(driver, 20).until(
-                EC.presence_of_all_elements_located((By.CLASS_NAME, 'job_seen_beacon')))
-
-            for job in job_lists:
-                find_if_complies_rules(job)
-
-            go_to_next_page.click()
-                
+            update_url = "https://www.indeed.com/jobs?q={}+{}&l={}&start={}".format(WHAT.split()[0],WHAT.split()[1],WHERE,count*10)
         except:
+            print(update_url)
+        #go_to_next_page = driver.find_element(By.XPATH, "//a[@aria-label='Next Page']")
+
+        job_lists = WebDriverWait(driver, 20).until(
+            EC.presence_of_all_elements_located((By.CLASS_NAME, 'job_seen_beacon')))
+
+        for job in job_lists:
+            find_if_complies_rules(job)
+
+        #go_to_next_page.click()
+        if count <= next_itr_pages:
+            driver.get(update_url)
+        else:
             break
+        count +=1
 
 
 find_list_of_jobs()
 
 ''' just to check for the front side of indeed '''
-'''
+
 driver = login_to_new_window(driver)
 find_if_eligible_company(driver,list_of_valid_companies_Details)
-'''
+
 driver.close()
