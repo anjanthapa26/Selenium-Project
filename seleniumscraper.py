@@ -19,13 +19,13 @@ from selenium.webdriver.support import expected_conditions as EC
 
 WHAT = "Devops Engineer"
 WHERE = "Remote"
-proxy = FreeProxy(rand=True).get()
+#proxy = FreeProxy(rand=True).get()
 list_of_valid_companies_Details = []
 cases = [["\$\d+K - \$\d+K"],["\$\d+,\d+ - \$\d+,\d+"],["\$\d+.\d+K - \$\d+.\d+K"],["\$\d+.\d+K - \$\d+K"],["\$\d+K - \$\d+.\d+K"],["\$\d+,\d+K - \$\d+,\d+K"]]
 TARGET_URL = 'https://www.indeed.com'
 duplicate_company_checker = []
 
-def launch_browser():
+def launch_browser(proxy):
     chrome_options = Options()
     # TOGGLE COMMENT FOR headless or !headless
     # chrome_options.add_argument("--headless")
@@ -49,18 +49,21 @@ def launch_browser():
     return webdriver.Chrome(ChromeDriverManager().install(), **web_driver_params)
 
 
-driver = launch_browser()
-driver.maximize_window()
+#driver = launch_browser()
+#driver.maximize_window()
+'''
 driver.get(TARGET_URL)
 driver.find_element(By.XPATH, "//input[@id='text-input-what']").send_keys(WHAT)
 driver.find_element(By.XPATH, "//input[@id='text-input-where']").send_keys(WHERE)
 searchBtn = driver.find_element(by=By.CLASS_NAME, value="yosegi-InlineWhatWhere-primaryButton")
 searchBtn.click()
 
+'''
+
 ''' Since the source links are quite inconsistent '''
 
 
-def deal_with_sourceLinks(job):
+def deal_with_sourceLinks(driver,job):
     try:
         source_link = WebDriverWait(driver,5).until(
                 EC.element_to_be_clickable(job.find_element(By.XPATH, ".//a[@class='jcs-JobTitle css-jspxzf eu4oa1w0']")))
@@ -100,7 +103,7 @@ def deal_with_estimated_salary(job: WebElement) -> AnyStr or None:
 ''' Deal with the inconsistent company Name '''
 
 
-def deal_with_company_name(job):
+def deal_with_company_name(driver,job):
     try:
         company_name= WebDriverWait(driver, 10).until(
                 EC.element_to_be_clickable(job.find_element(By.XPATH, ".//span[@class='companyName']")))
@@ -111,10 +114,17 @@ def deal_with_company_name(job):
         return 'None'
 
 
+''' Get the title of the company'''
+
+def get_title(driver,job):
+    title = WebDriverWait(driver,5).until(
+                EC.element_to_be_clickable(job.find_element(By.XPATH, ".//a[@class='jcs-JobTitle css-jspxzf eu4oa1w0']/span")))
+    return title.text
+
 ''' Find if the each companies on lists complies with the rules or not '''
 
 
-def find_if_complies_rules(job: WebElement):
+def find_if_complies_rules(driver,job: WebElement):
     try:
         driver.execute_script("arguments[0].scrollIntoView(true)", job)
     except Exception:
@@ -129,11 +139,13 @@ def find_if_complies_rules(job: WebElement):
     except:
         print('Click event not found')
     
-    #time.sleep(10)
-    get_company_name = deal_with_company_name(job)
+    get_company_name = deal_with_company_name(driver,job)
     print(get_company_name)
 
-    get_source_link = deal_with_sourceLinks(job)
+    get_title_of_company = get_title(driver,job)
+    print(get_title_of_company)
+
+    get_source_link = deal_with_sourceLinks(driver,job)
     print(get_source_link)
 
     get_salary = deal_with_estimated_salary(job)
@@ -146,7 +158,7 @@ def find_if_complies_rules(job: WebElement):
                 find_experience, get_tech, check_valid = check_if_authorization(driver)
 
                 if not check_valid:
-                    list_of_valid_companies_Details.append([get_company_name, find_experience, get_salary, get_source_link,get_tech])
+                    list_of_valid_companies_Details.append([get_title_of_company,get_company_name, find_experience, get_salary, get_source_link,get_tech,get_title_of_company])
 
                 duplicate_company_checker.append(get_company_name)
                 print(list_of_valid_companies_Details)
@@ -156,36 +168,46 @@ def find_if_complies_rules(job: WebElement):
 
 
 def find_list_of_jobs():
-    global proxy
-    count = 1
-    next_itr_pages = count + 2
+    count = 66
+    next_itr_pages = count + 3
     while True:
         proxy = FreeProxy(rand=True).get()
+        driver = launch_browser(proxy)
+        driver.maximize_window()
         try:
             update_url = "https://www.indeed.com/jobs?q={}+{}&l={}&start={}".format(WHAT.split()[0],WHAT.split()[1],WHERE,count*10)
         except:
-            print(update_url)
-        #go_to_next_page = driver.find_element(By.XPATH, "//a[@aria-label='Next Page']")
+            return driver
 
-        job_lists = WebDriverWait(driver, 20).until(
+        if count < next_itr_pages:
+            driver.get(update_url)
+
+            job_lists = WebDriverWait(driver, 20).until(
             EC.presence_of_all_elements_located((By.CLASS_NAME, 'job_seen_beacon')))
 
-        for job in job_lists:
-            find_if_complies_rules(job)
+            for job in job_lists:
+                find_if_complies_rules(driver,job)
 
-        #go_to_next_page.click()
-        if count <= next_itr_pages:
-            driver.get(update_url)
+            try:
+                check_for_next_page = driver.find_element(By.XPATH,"//a[@aria-label='Next Page']")
+            except:
+                return driver
+
+
+            count +=1
+
+            if count != next_itr_pages:
+                driver.close()
         else:
-            break
-        count +=1
+            return driver
 
 
-find_list_of_jobs()
+
+driver = find_list_of_jobs()
 
 ''' just to check for the front side of indeed '''
 
-driver = login_to_new_window(driver)
+login_to_new_window(driver)
 find_if_eligible_company(driver,list_of_valid_companies_Details)
 
 driver.close()

@@ -1,25 +1,57 @@
 Job details
 Job Type
-Contract
+Full-time
 Remote
-Indeed's salary guide
-Not provided by employer
-$102K - $129K a year is Indeed's estimated salary for this role in Remote.
- Full Job Description
-Duration: 7+ Months
+Full Job Description
+Responsibilities:
+Communicate effectively while working closely with architects, system administrators, project management and administrative/operational staff to understand, define, prototype, publish and maintain database artifacts
+Mix technical skills (Python, SQL, Apache Spark) with data pipeline design while configuring intuitive, efficient and automated data pipelines using the technology stack available at MIDAS/CMS
+Contributing to our team’s culture of continuous, dependable, sustainable analytics and software development. We do light-weight data governance, version control, confluence pages, automated testing/build/deployment-the works
+Working with architects, database engineers, BI Users and Quality Assurance specialists when developing data pipelines with a purpose. Candidates should be willing to create proof of concepts to support their recommendations
+Be detail/solution-oriented and pay close attention to workflows and outcomes, and collaborate with internal departments, external organizations, and other developers and engineers to refine our suite of analytics products
+Troubleshooting data models, bugs, system configurations, and app/data integrity across many tools in a complex, technical environment
+Be a sprinter while applying agile software development principles to daily work (including JIRA and Github). Use CMS tools such as JIRA and Confluence to support the chosen framework and store generated artifacts
+Provide leadership to develop and execute highly complex and large-scale data structures and pipelines to organize, collect and standardize data to generate insights and addresses reporting needs
+Responsible for building, deploying, and ensuring all database infrastructure is available 24/7/365. Experience with AWS and Databricks strongly preferred
+Develop automation and tooling to increase operational efficiency while ensuring system reliability and security
+Manage multiple competing priorities in a fast-paced, deadline-oriented environment.
+Maintain thorough and well-written documentation.
+Participate in live event support, root cause analysis and troubleshooting and on-call rotation
+May provide oversight and direction to junior team members
+Effectively communicate ideas and data verbally and in writing
+Provide input to highly complex decisions that impact future enhancements
+Seek input from multiple constituents and stakeholders to drive innovative solutions
+Incorporate feedback and ensure decisions are implemented swiftly to yield high quality execution
+Effectively negotiate and resolve conflicts in a constructive manner
+Build strong relationships and collaborate effectively with stakeholders
+Serve as a role model, demonstrating respect and inclusion, creating a culture that fosters innovation
+Support and mentor engineers, empowering them to make effective decisions
+Requirements:
+5+ years of experience working in DevOps engineering role
+7 years of experience with programming and infrastructure as code scripting.
+5 years of experience with AWS and Databricks strongly preferred
+Experience building a proper path to production leveraging multiple lifecycles, testing, integration, automation
+Software development practices like DevOps and CI/CD tool chains (i.e., Jenkins, Azure Developer Services, GitHub)
+Container orchestration systems (i.e., Docker, Kubernetes, Cloud Foundry, Azure Kubernetes Service, GitHub)
+Experience running, deploying, and maintaining production cloud infrastructure in AWS (Terraform, CloudFormation, LakeFormation etc.,)
+Experience with configuration management tools
+Demonstrated experience with a variety of relational database and data warehousing technology such as AWS Redshift and Databricks -high priority. Familiarity with Oracle, MySQL, and PostgreSQL to mainly support Commercial Off-the-Shelf (COTS) products, but not required. Other tools used are Tivoli Work Scheduler (TWS) to load data from Databricks into Redshift. Cognos and SAS interaction with the data infrastructure
+Experience with developing solutions on cloud computing services and infrastructure in the data and analytics space
+Prior experience with deploying SAS Viya in AWS Workspaces
+Highly detailed focused. Excellent organization skills
+Experience operating within a database reliability engineering (DRE) and/or systems reliability engineering (SRE) role
+Employment is subject to the successful completion of multiple background investigations (CMS eQIP & RELIGroup’s), verification of qualifications, completion of onboarding forms, submission of required documents, and any other job-related requirement before or after appointment
+Bachelor Degree in Information Technology, Business Administration or Health Information Management or approved equivalent combination of education and experience required
+Certification in one or more of the following technologies preferred: Cloud, mobile, Database, Data Engineering, Data Analytics, Big Data, BI, Data Science, Machine Learning, Artificial Intelligence
+EEO Employer:
+RELI Group is an Equal Employment Opportunity / Affirmative Action employer. All qualified applicants will receive consideration for employment without regard to race, color, national origin, ancestry, citizenship status, military status, protected veteran status, religion, creed, physical or mental disability, medical condition, marital status, sex, sexual orientation, gender, gender identity or expression, age, genetic information, or any other basis protected by law, ordinance, or regulation.
+HUBZone:
+RELI Group is an established SBA certified HUBZone and 8(a) small business. We encourage all candidates who live in a HUBZone to apply. You can check to see if your address is located in a HUBZone by accessing the SBA HUBZone Map.
 
-Job Description:
-Highest priority: AWS Lambda with node.js. If this skill is absent, the candidate may not be very productive.
-Secondary priority: Serverless Deployment, if already know Jenkins, AWS Code Pipelines, etc. So, this skill is trainable.
-Lesser priorities: AWS API Gateways, AWS RDS with Postgres (Arora), AWS Dynamo.
-These skills are nice to have.
-Misc: One trust (desired), JIRA, Confluence.
-
-The Capgemini Freelancer Gateway is enabled by a cutting-edge software platform that leads the contingent labor world for technology innovation. The software platform leverages Machine Learning and Artificial Intelligence to make sure the right people end up in the right job.
-
-A global leader in consulting, technology services, and digital transformation, Capgemini is at the forefront of innovation to address the entire breadth of clients’ opportunities in the evolving world of cloud, digital, and platforms. Building on its strong 50-year heritage and deep industry-specific expertise, Capgemini enables organizations to realize their business ambitions through an array of services from strategy to operations. Capgemini is driven by the conviction that the business value of technology comes from and through people. It is a multicultural company with over 200,000 team members in more than 40 countries. The Group reported 2018 global revenues of EUR 13.2 billion.
+FAXDMvHnkI
 Hiring Insights
 Job activity
-Posted 15 days ago
-Capgemini
+Posted 24 days ago
+RELI Group, Inc.
+If you require alternative methods of application or screening, you must approach the employer directly to request this as Indeed is not responsible for the employer's application process.
 Report job

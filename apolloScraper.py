@@ -55,14 +55,14 @@ def get_the_emails(driver,elem):
 
 
 def extract_info_to_excel_sheet(ws,three_details_of_company,list_of_companiesDetails):
-    duplicate_company_checker_list = list(map(lambda cell:cell.value,ws[get_column_letter(1)]))[1:]
+    duplicate_company_checker_list = list(map(lambda cell:cell.value,ws[get_column_letter(2)]))[1:]
     print('Got inside extract info to excel sheet section',duplicate_company_checker_list)
-    if list_of_companiesDetails[0] in duplicate_company_checker_list:
+    if list_of_companiesDetails[1] in duplicate_company_checker_list:
         return ws
     else:
         for rows in three_details_of_company:
             print(three_details_of_company,list_of_companiesDetails)
-            ws.append([list_of_companiesDetails[0],rows[0],rows[1],rows[2],list_of_companiesDetails[4],list_of_companiesDetails[1],list_of_companiesDetails[2],list_of_companiesDetails[3]])
+            ws.append([list_of_companiesDetails[0],list_of_companiesDetails[1],rows[0],rows[1],rows[2],list_of_companiesDetails[5],list_of_companiesDetails[2],list_of_companiesDetails[3],list_of_companiesDetails[4]])
 
         return ws
 
@@ -246,7 +246,7 @@ def find_if_eligible_company(driver,list_of_companiesDetails):
 
         # should fix this issue of not getting the company name 
 
-        total_lists_companies_of_respective_company = get_the_list_of_tags(com_details[0],driver)
+        total_lists_companies_of_respective_company = get_the_list_of_tags(com_details[1],driver)
 
         print(total_lists_companies_of_respective_company)
         if not total_lists_companies_of_respective_company:
@@ -254,12 +254,12 @@ def find_if_eligible_company(driver,list_of_companiesDetails):
             continue
         counter = 0
         while counter < len(total_lists_companies_of_respective_company):
-            print('inside while loop', counter,total_lists_companies_of_respective_company[counter][0],com_details[0])
-            if total_lists_companies_of_respective_company[counter][0].lower() == com_details[0].lower():
+            print('inside while loop', counter,total_lists_companies_of_respective_company[counter][0],com_details[1])
+            if total_lists_companies_of_respective_company[counter][0].lower() == com_details[1].lower():
 
                 print(total_lists_companies_of_respective_company[counter])
                 try:
-                    getRightCompany = WebDriverWait(driver,7).until(EC.presence_of_element_located((By.XPATH,"//*[contains(text(),'"+com_details[0]+"')]/..//div[contains(text(),'"+total_lists_companies_of_respective_company[counter][1]+"')]/../../../..")))
+                    getRightCompany = WebDriverWait(driver,7).until(EC.presence_of_element_located((By.XPATH,"//*[contains(text(),'"+com_details[1]+"')]/..//div[contains(text(),'"+total_lists_companies_of_respective_company[counter][1]+"')]/../../../..")))
                     #exact_xpath ="//*[@class='zp_1RaZe zp_1omjm'][contains(normalize-space(),'"+com_details[0]+"')][contains(normalize-space(),'"+total_lists_companies_of_respective_company[counter][1]+"')]"
                     #getRightCompany = WebDriverWait(driver,30).until(EC.element_to_be_clickable(("//*[@class='zp_2brNs'][contains(normalize-space(),'"+com_details[0]+"')][contains(normalize-space(),'"+total_lists_companies_of_respective_company[counter][1]+"')]/div[1]")))
                     #getRightCompany = WebDriverWait(driver,30).until(EC.presence_of_element_located((By.XPATH,"//*[contains(text(),'"+com_details[0]+"')]/..//div[contains(text(),'"+total_lists_companies_of_respective_company[counter][1]+"')]/../../..")))
@@ -281,7 +281,7 @@ def find_if_eligible_company(driver,list_of_companiesDetails):
                     if counter != len(total_lists_companies_of_respective_company)-1:
                         get_to_chooseCompany = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,"//input[@placeholder='Search...']")))
                         get_to_chooseCompany.clear()
-                        get_to_chooseCompany.send_keys(com_details[0].split(',')[0])
+                        get_to_chooseCompany.send_keys(com_details[1].split(',')[0])
 
 
                 except Exception as e:

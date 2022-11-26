@@ -1,7 +1,7 @@
 from openpyxl import Workbook
 from openpyxl.styles import Font
 from openpyxl.utils import get_column_letter
-list_of_headers = ['Company','Designation','Responsible Person','Emails','Tech stack','Experience','Salary','Source Link']
+list_of_headers = ['Title','Company','Designation','Responsible Person','Emails','Tech stack','Experience','Salary','Source Link']
 
 destination_file ="./sheets/devops.xlsx"
 def get_the_header_section(headers):

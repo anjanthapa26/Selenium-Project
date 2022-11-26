@@ -40,7 +40,7 @@ def login_to_new_window(driver):
     '''
     login_details("thapaanjan40@gmail.com","@asdfqwer1234@",driver)
     try:
-        check_if_login_error = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH,"//*[@id='provider-mounter']/div/div[2]/div[1]/div/div[1]/div/span")))
+        check_if_login_error = WebDriverWait(driver, 4).until(EC.presence_of_element_located((By.CLASS_NAME,"zp-icon apollo-icon apollo-icon-alert-triangle zp_2BRav zp_35LDu zp_16f5V")))
         login_details("thapaanjan40@gmail.com","@asdfqwer1234@",driver)
     except:
         print('No security issue on login')
