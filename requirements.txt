@@ -38,5 +38,6 @@ urllib3==1.26.12
 webdriver-manager==3.8.5
 websockets==10.4
 wsproto==1.2.0
-webdriver-manager==3.5.4
 free-proxy==1.1.0
+googletrans==3.1.0a0
+langdetect
