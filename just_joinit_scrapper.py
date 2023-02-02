@@ -19,6 +19,7 @@ from apolloScraper import find_if_eligible_company
 
 
 list_of_valid_companies_Details = []
+list_of_jobs_to_include = ['devops','cloud','cloudops','sre','site reliability engineer','devsecops']
 prox = FreeProxy(rand=True).get()
 
 class JustJoinItScrapper:
@@ -221,6 +222,7 @@ class JustJoinItScrapper:
         return job_title_container
 
     def update_list_of_jobs(self):
+        valid_job = False
         self.get_required_webpage()
         time.sleep(5)
         initial_job_list_titles = self.get_list_of_jobs()
@@ -228,13 +230,22 @@ class JustJoinItScrapper:
         for idx,job_title in enumerate(initial_job_list_titles):
             self.idx = idx
             self.scroll_value += 90
-            self.find_if_rules_complies(job_title)
+            for valid_checks in list_of_jobs_to_include:
+                if valid_checks in job_title[0].lower():
+                    valid_job = True
+                    self.find_if_rules_complies(job_title)
+                    break
+            if not valid_job:
+                find_job_container =self.driver.find_element(By.XPATH,"//div[@class='css-ic7v2w']")
+                self.driver.execute_script("arguments[0].scrollTop = '"+str(self.scroll_value)+"';", find_job_container)
             
             if len(initial_job_list_titles) == idx + 1:
                 latest_available_jobs = self.get_list_of_jobs()
                 for updated_jobs in latest_available_jobs:
                     if updated_jobs not in initial_job_list_titles:
                         initial_job_list_titles += [updated_jobs]
+            valid_job = False
+            time.sleep(2)
         return self.driver
 
         
