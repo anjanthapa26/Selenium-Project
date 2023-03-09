@@ -22,7 +22,6 @@ class Monster:
         self.driver = self.launch_browser()
         self.url = 'https://www.monster.com/'
         self.idx = 0
-        self.scroll_value = 0
 
     def launch_browser(self):
         chrome_options = Options()
@@ -106,12 +105,10 @@ class Monster:
                     getInfo.append(True)
                     return getInfo
 
-
             getInfo.append(False)
             fileObj.close()
 
             return getInfo
-
 
         f.close()
         return readFile('demofile.txt')
@@ -123,6 +120,12 @@ class Monster:
             find_correct_article = self.driver.find_element(By.XPATH,"//a[contains(text(),'"+job_title[0]+"')]/following-sibling::h3[contains(text(),'"+job_title[1]+"')]/../..")
         except:
             print('unable to find correct article container')
+
+
+        try:
+            self.driver.execute_script("arguments[0].scrollIntoView(true)", find_correct_article)
+        except Exception:
+            print('Error on the execute_script')
 
         try:
             actions = ActionChains(self.driver)
@@ -145,9 +148,6 @@ class Monster:
         print(job_name,salary,company_name,source_link,find_experience,get_tech)
         if not check_valid:
             list_of_valid_companies_Details.append([job_name, company_name, find_experience, salary, source_link,get_tech])
-
-        find_job_container =self.driver.find_element(By.ID,"card-scroll-container")
-        self.driver.execute_script("arguments[0].scrollTop = '"+str(self.scroll_value)+"';", find_job_container)
         
 
 
@@ -170,20 +170,16 @@ class Monster:
 
         for idx,job_title in enumerate(initial_job_list_titles):
             self.idx = idx
-            self.scroll_value += 100
             try:
                  self.find_if_rules_complies(job_title)
             except:
                 print('exception')
 
             if len(initial_job_list_titles) == idx + 1:
-                latest_available_jobs = self.get_list_of_jobs()
+                latest_available_jobs = self.get_list_of_jobs()[self.idx + 1:]
                 for updated_jobs in latest_available_jobs:
-                    if updated_jobs not in initial_job_list_titles:
                         initial_job_list_titles += [updated_jobs]
-
         return self.driver
-
 
 obj = Monster('devops','remote')
 driver = obj.update_list_of_jobs()
