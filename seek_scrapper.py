@@ -21,8 +21,8 @@ class Seek:
         self.WHAT = WHAT
         self.WHERE = WHERE
         self.driver = self.launch_browser()
-        self.url = 'https://www.seek.com.au/'
         self.count = 1
+        self.url = "https://www.seek.com.au/{}-jobs/in-{}?page={}".format(self.WHAT,self.WHERE,self.count)
 
     def launch_browser(self):
         chrome_options = Options()
@@ -45,9 +45,9 @@ class Seek:
     def get_required_webpage(self):
         self.driver.maximize_window()
         self.driver.get(self.url)
-        self.driver.find_element(By.ID,'keywords-input').send_keys(self.WHAT)
-        self.driver.find_element(By.ID,'SearchBar__Where').send_keys(self.WHERE)
-        self.driver.find_element(By.XPATH,"//button[@type='submit']").click()
+        # self.driver.find_element(By.ID,'keywords-input').send_keys(self.WHAT)
+        # self.driver.find_element(By.ID,'SearchBar__Where').send_keys(self.WHERE)
+        # self.driver.find_element(By.XPATH,"//button[@type='submit']").click()
 
 
     def get_job_title(self):
@@ -179,9 +179,10 @@ class Seek:
     def get_all_list_of_jobs(self):
         initial_job_list = []
         self.get_required_webpage()
-        time.sleep(3)
+        time.sleep(2)
         initial_job_list.append(self.get_list_of_jobs())
         idx = 0
+        next_itr_page = self.count + 1
         while idx <= len(initial_job_list):
             self.find_if_rules_complies(initial_job_list[idx])
             self.driver.back()
@@ -194,6 +195,10 @@ class Seek:
                     initial_job_list = []
                     idx = 0
                     self.count +=1
+                    
+                    if self.count == next_itr_page:
+                        return self.driver
+                    
                     self.url = "https://www.seek.com.au/{}-jobs/in-{}?page={}".format(self.WHAT,self.WHERE,self.count)
                     self.driver.get(self.url)
                     try:
